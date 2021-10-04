@@ -15,7 +15,7 @@ class Router
         $this->actualMethod = $currentMethod;
 
         $this->notFound = function () {
-            Router::sendResponse(["message" => "Not Found!"], 404);
+            $this->sendResponse(["message" => "Not Found!"], 404);
         };
     }
 
@@ -87,13 +87,13 @@ class Router
         return call_user_func($this->notFound);
     }
 
-    public static function sendResponse($data, $code = 200)
+    public function sendResponse($data, $code = 200)
     {
         ob_clean();
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
-        header("Access-Control-Allow-Headers: X-Requested-With");
-        header("Content-type: application/json; charset=utf-8");
+        header('Access-Control-Allow-Headers: X-Requested-With');
+        header('Content-type: application/json; charset=utf-8');
         http_response_code($code);
 
         if ($data) {
